@@ -65,6 +65,7 @@ print("Median: $",median)
 print("Mode: $",mode)
 print("Range: $",range)
 print("Standard Deviation: $",stdDev)
-
+print("High: $" , priceList[(len(priceList) - 1)])
+print("Low: $", priceList[0])
 #print("There were ", doubleCount, " ranging prices")#Used for testing
 #print("There were ", singleCount, " regular prices")#Used for testing
