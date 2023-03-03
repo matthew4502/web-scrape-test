@@ -23,6 +23,7 @@ for price in prices:
     priceSTR = str(price.text)#Pull the data out of each price line in the html
     priceSTR = priceSTR.replace("$", '')#Remove the $ from the data
     priceSTR = priceSTR.replace(" to ", " ")#Change the format of separator for ranging prices
+    priceSTR = priceSTR.replace(",", "")#Remove the , from $1,000+ items
     #Note: Ranging prices are of the form "$Price to $Price"
     #All prices will be converted to floats when added to the priceList in order to perform calculations later
     #and will be formatted with two decimal points since they are a price
@@ -51,21 +52,21 @@ priceList.sort()
 
 print("All values found from lowest to highest price:")
 for val in priceList:
-    print("$",val)
+    print("${:.2f}".format(val))#Formats the value to have two decimal points required in output
 
 #Now we will analyze the data, with all values rounded to two decimal points since they are prices
 stdDev = round(numpy.std(priceList), 2)
 mean = round(numpy.mean(priceList), 2)
-mode = stats.mode(priceList)
+#mode = stats.mode(priceList)
 median = round(numpy.median(priceList), 2)
 range = round((priceList[len(priceList) - 1] - priceList[0]) + 0.00, 2)
 print("Statistics on found pricing data:")
-print("Mean: $",mean)
-print("Median: $",median)
-print("Mode: $",mode)
-print("Range: $",range)
-print("Standard Deviation: $",stdDev)
-print("High: $" , priceList[(len(priceList) - 1)])
-print("Low: $", priceList[0])
+print("Mean: ${:.2f}".format(mean))
+print("Median: ${:.2f}".format(median))
+#print("Mode: $",mode)
+print("Range: ${:.2f}".format(range))
+print("Standard Deviation: ${:.2f}".format(stdDev))
+print("High: ${:.2f}".format(priceList[(len(priceList) - 1)]))
+print("Low: ${:.2f}".format(priceList[0]))
 #print("There were ", doubleCount, " ranging prices")#Used for testing
 #print("There were ", singleCount, " regular prices")#Used for testing
