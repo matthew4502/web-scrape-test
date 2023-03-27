@@ -19,33 +19,38 @@ prices = soup.find_all("span", attrs={'class':'s-item__price'})#Find all instanc
 #doubleCount = 0 #Used for testing
 #singleCount = 0 #Used for testing
 priceList = []#set up a list of prices after reformatting the data
+itec = 0
 for price in prices:
     priceSTR = str(price.text)#Pull the data out of each price line in the html
     priceSTR = priceSTR.replace("$", '')#Remove the $ from the data
     priceSTR = priceSTR.replace(" to ", " ")#Change the format of separator for ranging prices
     priceSTR = priceSTR.replace(",", "")#Remove the , from $1,000+ items
+    print(priceSTR)
     #Note: Ranging prices are of the form "$Price to $Price"
     #All prices will be converted to floats when added to the priceList in order to perform calculations later
     #and will be formatted with two decimal points since they are a price
-    if " " in priceSTR:#If there was a ranging price
-        i = 0
-        for c in range(len(priceSTR)):#Check until we find the ranging price
-            if priceSTR[i].isspace():
-                #Testing if properly sensing and separating ranging prices
-                #print("Before")
-                #print("Found a double val")
-                #print(priceSTR[0:i])
-                #print(priceSTR[i+1:])
-                #print("After")
-                #After tests add values
-                priceList.append(round(float(priceSTR[0:i]), 2))#Add the first price
-                priceList.append(round(float(priceSTR[i+1:]), 2))#Add the second price
-                #doubleCount = doubleCount + 1 #Used for testing
-                break
-            i = i + 1
-    else:
-        priceList.append(round(float(priceSTR), 2))
-        #singleCount = singleCount + 1 #Used for testing
+    if priceSTR != "Tap item see current priceSee price":
+        if (" " in priceSTR):#If there was a ranging price
+            i = 0
+            for c in range(len(priceSTR)):#Check until we find the ranging price
+                if priceSTR[i].isspace():
+                    #Testing if properly sensing and separating ranging prices
+                    #print("Before")
+                    #print("Found a double val")
+                    #print(priceSTR[0:i])
+                    #print(priceSTR[i+1:])
+                    #print("After")
+                    #After tests add values
+                    priceList.append(round(float(priceSTR[0:i]), 2))#Add the first price
+                    priceList.append(round(float(priceSTR[i+1:]), 2))#Add the second price
+                    #doubleCount = doubleCount + 1 #Used for testing
+                    break
+                i = i + 1
+        else:
+            priceList.append(round(float(priceSTR), 2))
+            #singleCount = singleCount + 1 #Used for testing
+        itec = itec + 1
+        print("Item #", itec)
 
 #Sort the list so output can be least to greatest
 priceList.sort()
